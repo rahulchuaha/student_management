@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.springboot.webservices.entity.Student;
+import com.springboot.webservices.Dto.StudentDto;
+//import com.springboot.webservices.entity.Student;
 import com.springboot.webservices.service.StudentService;
 
 import lombok.AllArgsConstructor;
@@ -27,24 +28,24 @@ public class StudentController {
 
     //build create rest api
     @PostMapping
-    public ResponseEntity<Student> createStudent(@RequestBody Student student){
-         Student savStudent = studentService.createStudent(student);
+    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto student){
+         StudentDto savStudent = studentService.createStudent(student);
 
          return new ResponseEntity<>(savStudent, HttpStatus.CREATED);
     }
 
     //build get by id rest api
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentById(@PathVariable Long id){
-        Student student = studentService.getStudentById(id);
+    public ResponseEntity<StudentDto> getStudentById(@PathVariable Long id){
+        StudentDto student = studentService.getStudentById(id);
 
         return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     // build get all student api
     @GetMapping
-    public ResponseEntity<List<Student>> getAllStudent(){
-        List<Student> students = studentService.getAllStudent();
+    public ResponseEntity<List<StudentDto>> getAllStudent(){
+        List<StudentDto> students = studentService.getAllStudent();
 
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
@@ -52,11 +53,11 @@ public class StudentController {
     //build update student rest api
 
     @PutMapping("{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, 
-                                                      @RequestBody Student student){
+    public ResponseEntity<StudentDto> updateStudent(@PathVariable Long id, 
+                                                      @RequestBody StudentDto student){
 
         student.setId(id);
-        Student updatedStu =  studentService.updateStudent(student);
+        StudentDto updatedStu =  studentService.updateStudent(student);
 
         return new ResponseEntity<>(updatedStu, HttpStatus.OK);
     }

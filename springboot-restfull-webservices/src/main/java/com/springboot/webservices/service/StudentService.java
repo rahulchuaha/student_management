@@ -2,17 +2,18 @@ package com.springboot.webservices.service;
 
 import java.util.List;
 
-import com.springboot.webservices.entity.Student;
+import com.springboot.webservices.Dto.StudentDto;
+
 
 public interface StudentService {
 
-    Student createStudent(Student student);
+    StudentDto createStudent(StudentDto student);
 
-    Student getStudentById(Long Id);
+    StudentDto getStudentById(Long Id);
 
-    List<Student> getAllStudent();
+    List<StudentDto> getAllStudent();
 
-    Student updateStudent(Student student);
+    StudentDto updateStudent(StudentDto student);
 
     void deleteStudent(Long id);
     

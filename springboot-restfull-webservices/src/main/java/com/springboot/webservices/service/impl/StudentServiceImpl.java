@@ -2,10 +2,13 @@ package com.springboot.webservices.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.springboot.webservices.Dto.StudentDto;
 import com.springboot.webservices.entity.Student;
+import com.springboot.webservices.mapper.StudentMapper;
 import com.springboot.webservices.repository.StudentRepository;
 import com.springboot.webservices.service.StudentService;
 
@@ -18,30 +21,42 @@ public class StudentServiceImpl implements StudentService{
     private StudentRepository studentRepository;
     
     @Override
-    public Student createStudent(Student student) {
-         return studentRepository.save(student);
+    public StudentDto createStudent(StudentDto studentDto) {
+
+        // Convert StudentDto into Student Jpa Entity
+        Student student = StudentMapper.mapToStudent(studentDto);
+        Student savedStudent = studentRepository.save(student);
+
+        // Convert Student Jpa into Student Dto
+        return StudentMapper.mapToStudentDto(savedStudent);
+       
+            
+        
     }
 
     @Override
-    public Student getStudentById(Long Id) {
+    public StudentDto getStudentById(Long Id) {
         Optional<Student> optionalStudent = studentRepository.findById(Id);
 
-        return optionalStudent.get();
+        Student student = optionalStudent.get();
+        return StudentMapper.mapToStudentDto(student);
     }
 
     @Override
-    public List<Student> getAllStudent() {
-        return studentRepository.findAll();
+    public List<StudentDto> getAllStudent() {
+        List<Student> student = studentRepository.findAll();
+        return student.stream().map(StudentMapper::mapToStudentDto).
+          collect(Collectors.toList());
     }
 
     @Override
-    public Student updateStudent(Student student) {
+    public StudentDto updateStudent(StudentDto student) {
          Student existingStudent = studentRepository.findById(student.getId()).get();
          existingStudent.setFirstName(student.getFirstName());
          existingStudent.setLastName(student.getLastName());
          existingStudent.setEmail(student.getEmail());
          Student updated = studentRepository.save(existingStudent);
-         return updated;
+         return StudentMapper.mapToStudentDto(existingStudent);
     }
 
     @Override
