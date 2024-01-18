@@ -1,10 +1,12 @@
 package com.springboot.webservices.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,9 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import com.springboot.webservices.Dto.StudentDto;
-//import com.springboot.webservices.entity.Student;
+import com.springboot.webservices.exception.ErrorDetails;
+import com.springboot.webservices.exception.ResourceNotFoundException;
 import com.springboot.webservices.service.StudentService;
 
 import lombok.AllArgsConstructor;
@@ -69,4 +73,18 @@ public class StudentController {
         
         return new ResponseEntity<>("Student deleted successfully", HttpStatus.OK);
     }
+
+//     @ExceptionHandler(ResourceNotFoundException.class)
+//     public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException exception,
+//                                                                           WebRequest webRequest){
+            
+//             ErrorDetails errorDetails = new ErrorDetails(
+//                LocalDateTime.now(),
+//                exception.getMessage(),
+//                webRequest.getDescription(false),
+//                errorCode : "STUDENT NOT FOUND"
+//             );
+//             return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);                                                                
+
+//    }
 }
